@@ -7,21 +7,26 @@ for round in range(n):
 
     a_lst.sort(reverse=True)
     b_lst.sort(reverse=True)
+
     winner = 'D'
     for i in range(min(a, b)):
-        if a_lst[i] > b_lst[i]:
+        if a_lst[i] == b_lst[i]:
+            continue
+        elif a_lst[i] > b_lst[i]:
             winner = 'A'
             break
-        elif a_lst[i] < b_lst[i]:
+        else:
             winner = 'B'
             break
 
 
     # 짧은 쪽 끝까지 다 봤는데 결과 안 나올 경우
     if winner == 'D':
-        if a > b:
+        if a == b:
+            pass
+        elif a > b:
             winner = 'A'
-        elif b < a:
+        else:
             winner = 'B'
 
     print(winner)
