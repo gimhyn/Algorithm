@@ -23,5 +23,5 @@ for round in range(n):
             winner = 'A'
         elif b < a:
             winner = 'B'
-            
+
     print(winner)
