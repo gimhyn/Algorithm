@@ -1,34 +1,24 @@
-import sys
 from collections import Counter
+import sys
+input = sys.stdin.readline
 
-input = sys.stdin.read
-data = list(map(int, input().strip().split()))
+n=int(input())
+num=[int(input()) for i in range(n)]
+num.sort()
+print(round(sum(num)/n))
+print(num[(n//2)])
 
-N = data[0]
-numbers = data[1:]
+count=Counter(num)
+order=count.most_common()
+freq=order[0][1]
 
-# 산술평균
-mean = round(sum(numbers) / N)
-
-# 중앙값 계산
-sorted_numbers = sorted(numbers)
-median = sorted_numbers[N // 2]
-
-# 최빈값 계산
-frequency = Counter(numbers)
-modes = frequency.most_common()
-modes.sort(key=lambda x: (-x[1], x[0]))
-
-if len(modes) > 1 and modes[0][1] == modes[1][1]:
-    mode = modes[1][0]
+fq=[]
+for i in order:
+    if i[1]==freq:
+        fq.append(i[0])
+if len(fq)==1:
+    print(fq[0])
 else:
-    mode = modes[0][0]
+    print(sorted(fq)[1])
 
-# 범위 계산
-range_value = max(numbers) - min(numbers)
-
-# 결과 출력
-print(mean)
-print(median)
-print(mode)
-print(range_value)
+print(num[-1]-num[0])
