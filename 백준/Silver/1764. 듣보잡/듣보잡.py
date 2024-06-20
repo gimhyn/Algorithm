@@ -2,8 +2,8 @@ import sys
 input = sys.stdin.readline
 
 N, M = map(int, input().split())
-never_listened = list(input().strip('\n') for _ in range(N))
-never_seen = list(input().strip('\n') for __ in range(M))
+never_listened = list(input().strip() for _ in range(N))
+never_seen = list(input().strip() for __ in range(M))
 # 이름 <= 20, 띄어쓰기 없음, .각 리스트 중복 없음
 # N, M <= 500,000
 
