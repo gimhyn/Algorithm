@@ -11,8 +11,8 @@ def bfs():
     
     q = deque()
     q.append((N, 0))  # (location, time)
-    visited = [False] * 100001
-    visited[N] = True
+    visited = [0] * 100001
+    visited[N] = 1
     
     while q:
         location, time = q.popleft()
@@ -21,7 +21,7 @@ def bfs():
             if nl == K:
                 return time + 1
             if 0 <= nl < 100001 and not visited[nl]:
-                visited[nl] = True
+                visited[nl] = 1
                 q.append((nl, time + 1))
 
 print(bfs())
