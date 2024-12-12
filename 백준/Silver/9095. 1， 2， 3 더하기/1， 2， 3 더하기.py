@@ -1,15 +1,24 @@
 import sys
 input = sys.stdin.readline
 
-dp = [1] + [0] * 10
-for j in range(1, 11):
-    dp[j] += dp[j-1]
-    if j > 1:
-        dp[j] += dp[j-2]
-    if j > 2:
-        dp[j] += dp[j-3]
+T = int(input().strip())
 
-T = int(input())
-for i in range(T):
-    n = int(input())
-    print(dp[n])
+dp = [0] * 11
+def f(num):
+    dp[1] = 1
+    dp[2] = 2
+    dp[3] = 4
+    for i in range(4, num+1):
+        if dp[i]:
+            continue
+        if i > 1:
+            dp[i] += dp[i - 1]
+        if i > 2:
+            dp[i] += dp[i - 2]
+        if i > 3:
+            dp[i] += dp[i - 3]
+    return dp[num]
+
+for tc in range(T):
+    n = int(input().strip())
+    print(f(n))
