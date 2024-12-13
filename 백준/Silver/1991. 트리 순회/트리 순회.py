@@ -9,35 +9,37 @@ def alpha_to_decimal(a):
 
 def preorder(idx):
     print(chr(idx+64), end="")
-    if child[idx][0]:
-        preorder(child[idx][0])
-    if child[idx][1]:
-        preorder(child[idx][1])
+    if left[idx]:
+        preorder(left[idx])
+    if right[idx]:
+        preorder(right[idx])
     return
 
 def inorder(idx):
-    if child[idx][0]:
-        inorder(child[idx][0])
+    if left[idx]:
+        inorder(left[idx])
     print(chr(idx + 64), end="")
-    if child[idx][1]:
-        inorder(child[idx][1])
+    if right[idx]:
+        inorder(right[idx])
     return
 
 def postorder(idx):
-    if child[idx][0]:
-        postorder(child[idx][0])
-    if child[idx][1]:
-        postorder(child[idx][1])
+    if left[idx]:
+        postorder(left[idx])
+    if right[idx]:
+        postorder(right[idx])
     print(chr(idx + 64), end="")
     return
 
 
 N = int(input())
-child = [(0, 0) for _ in range(27)]
+left = [0] * 27
+right = [0] * 27
 
 for i in range(N):
-    par, left, right = map(alpha_to_decimal, input().strip().split())
-    child[par] = (left, right)
+    par, lc, rc = map(alpha_to_decimal, input().strip().split())
+    left[par] = lc
+    right[par] = rc
 
 
 preorder(1)
