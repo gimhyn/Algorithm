@@ -36,6 +36,8 @@ tocome = dijkstra(x, reverse_g)
 
 ans = 0
 for i in range(1, n+1):
+    if i == x:
+        continue
     if ans < togo[i] + tocome[i]:
         ans = togo[i] + tocome[i]
 
