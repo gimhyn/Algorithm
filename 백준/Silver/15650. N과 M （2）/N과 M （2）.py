@@ -17,6 +17,4 @@ def orders(n, m, start):
             path.pop()
             used[i] = 0
 
-
-
 orders(N, M, 1)
