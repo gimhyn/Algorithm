@@ -1,23 +1,23 @@
 import sys
 input = sys.stdin.readline
 
-def combi(arr, res, m):
-    if len(res) == m:
-        ans.append(tuple(res))
+N, M = map(int, input().split())
+nums = sorted(list(map(int, input().split())))
+visited = [0] * N
+path = []
+
+def perm(n, m):
+    if len(path) == m:
+        print(*path)
         return
-    for i in range(len(arr)):
-        if not used[i]:
-            used[i] = 1
-            combi(arr, res+[arr[i]], m)
-            used[i] = 0
 
-N, M = map(int, input().strip().split())
-nums = list(map(int, input().strip().split()))
-# 수 10,000이하 N, M 8이하 자연수
-ans = []
-used = [0] * N
-combi(nums, [], M)
-ans.sort()
+    for i in range(n):
+        if visited[i]:
+            continue
+        path.append(nums[i])
+        visited[i] = 1
+        perm(n, m)
+        path.pop()
+        visited[i] = 0
 
-for lst in ans:
-    print(*lst)
+perm(N, M)
