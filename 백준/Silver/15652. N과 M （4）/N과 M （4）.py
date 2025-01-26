@@ -1,17 +1,19 @@
 import sys
-input = sys.stdin.readline
+input = sys.stdin.readline 
 
-def perm(n, num, path, idx):
-    if len(path) == num:
+N, M = map(int, input().split())
+
+path = []
+
+def perm_repeat(n, m, now):
+    if len(path) == m:
         print(*path)
         return
+        
+    for i in range(now, n+1):
+        path.append(i)
+        last = i
+        perm_repeat(n, m, i)
+        path.pop()
 
-    for i in range(idx, n+1):
-        perm(n, num, path+[i], i)
-
-
-
-
-N, M = map(int, input().strip().split())
-
-perm(N, M, [], 1)
+perm_repeat(N, M, 1)
