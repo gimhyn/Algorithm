@@ -1,23 +1,23 @@
 import sys
-input = sys.stdin.readline
+input = sys.stdin.readline 
 
 N, M = map(int, input().split())
 nums = sorted(list(map(int, input().split())))
-visited = [0] * N
 path = []
+used = [0] * N
 
-def perm(n, m):
-    if len(path) == m:
+def permutation():
+    if len(path) == M:
         print(*path)
         return
-
-    for i in range(n):
-        if visited[i]:
-            continue
+        
+    for i in range(N):
+        if used[i]:
+           continue
         path.append(nums[i])
-        visited[i] = 1
-        perm(n, m)
+        used[i] = 1
+        permutation()
+        used[i] = 0
         path.pop()
-        visited[i] = 0
 
-perm(N, M)
+permutation()
