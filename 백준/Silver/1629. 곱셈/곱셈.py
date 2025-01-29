@@ -1,18 +1,17 @@
 import sys
 input = sys.stdin.readline
 
-A, B, C = map(int, input().split())
+a, b, c= map(int, input().split())
 
-def mod(num, power, deno):
-    remainder = num % deno
-    if power == 0:
+def modulo(A, B, C):
+    namoji = A % C
+    if B == 0:
         return 1
 
-    if power % 2: # 홀수면
-        half = mod(num, power//2, deno)
-        return (half * half * remainder) % deno
-    else: # 짝수면
-        half = mod(num, power//2, deno)
-        return (half * half) % deno
+    half = modulo(A, B//2, C)
+    if B % 2 == 0:
+        return (half * half) % C
+    else:
+        return (half * half * namoji) % C
 
-print(mod(A, B, C))
+print(modulo(a, b, c))
