@@ -1,26 +1,22 @@
 import sys
-import heapq
 input = sys.stdin.readline
 
-def dijkstra(start):
-    dist = [-1] + [float('inf')]* n
-    pq = [(0, start)] # 가중치, 노드 번호
-    dist[start] = 0
+def dfs(start):
+    visited = [0] * (n+1)
+    stack = [(0, start)]
+    visited[start] = -1
 
-    while pq:
-        c, now = heapq.heappop(pq)
-        if c > dist[now]:
-            continue
+    while stack:
+        dist, now = stack.pop()
 
         for v, next in tree[now]:
-            cost = v + c
-            if dist[next] > cost:
-                dist[next] = cost
-                heapq.heappush(pq, (cost, next))
+            if not visited[next]:
+                visited[next] = dist + v
+                stack.append((dist + v, next))
 
-    max_dist = max(dist)
-    idx = dist.index(max_dist)
-    return max_dist, idx
+    mv = max(visited)
+    return mv, visited.index(mv)
+
 
 n = int(input())
 tree = [[] for _ in range(n+1)]
@@ -29,6 +25,7 @@ for i in range(n-1):
     tree[p].append((v, c))
     tree[c].append((v, p))
 
-temp, j = dijkstra(1)
-ans, k = dijkstra(j)
+temp, j = dfs(1)
+ans, k = dfs(j)
+
 print(ans)
