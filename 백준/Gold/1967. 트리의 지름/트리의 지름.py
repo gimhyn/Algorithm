@@ -25,7 +25,4 @@ for i in range(n-1):
     tree[p].append((v, c))
     tree[c].append((v, p))
 
-temp, j = dfs(1)
-ans, k = dfs(j)
-
-print(ans)
+print(dfs(dfs(1)[1])[0])
