@@ -1,33 +1,30 @@
 import sys
-import math
 input = sys.stdin.readline
 
-def is_available(x):
-    for row in range(x):
-        if abs(row - x) == abs(used_row[row] - used_row[x]):
-            return False
-    return True
-
-
-def solution(x):
+def solve(x):
     global ans
     if x == N:
         ans += 1
         return
 
-    for col in range(N):
-        if not used_col[col]:
-            used_row[x] = col
-            used_col[col] = 1
+    for y in range(N):
+        if col[y]:
+            continue
+        elif dia1[x+y]:
+            continue
+        elif dia2[x-y + N-1]:
+            continue
 
-            if is_available(x):
-                solution(x+1)
+        col[y], dia1[x+y], dia2[x-y + N-1] = 1, 1, 1
+        solve(x+1)
+        col[y], dia1[x+y], dia2[x-y + N-1] = 0, 0, 0
 
-            used_col[col] = 0
 
 N = int(input())
-used_row = [0] * N # 각 행 몇 번째 열에 놓았는가?
-used_col = [0] * N
+col = [0] * N
+dia1 = [0] * (2*N)
+dia2 = [0] * (2*N)
 ans = 0
-solution(0)
+
+solve(0)
 print(ans)
