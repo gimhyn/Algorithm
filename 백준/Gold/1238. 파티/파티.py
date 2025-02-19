@@ -2,7 +2,7 @@ import sys
 import heapq
 input = sys.stdin.readline
 
-def djikstra(start, graph):
+def dijkstra(start, graph):
     dist = [0] + [1e9]*n
     pq = [(0, start)]
     dist[start] = 0
@@ -29,5 +29,5 @@ for i in range(m):
     tocome[e].append((t, s))
 
 
-res = [val1 + val2 for val1, val2 in zip(djikstra(x, togo), djikstra(x, tocome))]
+res = [val1 + val2 for val1, val2 in zip(dijkstra(x, togo), dijkstra(x, tocome))]
 print(max(res))
