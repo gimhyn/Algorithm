@@ -1,44 +1,33 @@
 import sys
 import heapq
-
 input = sys.stdin.readline
 
-def dijkstra(start, graph):
-    distance = [float('inf')] * (n+1)
-    q = []
-    heapq.heappush(q, (0, start))
-    distance[start] = 0
+def djikstra(start, graph):
+    dist = [0] + [1e9]*n
+    pq = [(0, start)]
+    dist[start] = 0
 
-    while q:
-        dist, now = heapq.heappop(q)
-        if distance[now] < dist:
+    while pq:
+        c, now = heapq.heappop(pq)
+        if dist[now] < c:
             continue
 
-        for node in graph[now]:
-            cost = dist + node[0]
-            if distance[node[1]] > cost:
-                distance[node[1]] = cost
-                heapq.heappush(q, (cost, node[1]))
+        for val, next in graph[now]:
+            if dist[next] > val + c:
+                dist[next] = val+c
+                heapq.heappush(pq, (val+c, next))
 
-    return distance
+    return dist
 
 n, m, x = map(int, input().split())
-g = [[] for _ in range(n+1)]
-reverse_g = [[] for _ in range(n+1)] 
+togo = [[] for _ in range(n+1)]
+tocome = [[] for _ in range(n+1)]
 
-for _ in range(m):
-    start, end, time = map(int, input().split())
-    g[start].append((time, end))
-    reverse_g[end].append((time, start))
+for i in range(m):
+    s, e, t = map(int, input().split())
+    togo[s].append((t, e))
+    tocome[e].append((t, s))
 
-togo = dijkstra(x, g)
-tocome = dijkstra(x, reverse_g)
 
-ans = 0
-for i in range(1, n+1):
-    if i == x:
-        continue
-    if ans < togo[i] + tocome[i]:
-        ans = togo[i] + tocome[i]
-
-print(ans)
+res = [val1 + val2 for val1, val2 in zip(djikstra(x, togo), djikstra(x, tocome))]
+print(max(res))
