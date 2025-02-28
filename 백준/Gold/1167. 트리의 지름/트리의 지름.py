@@ -1,11 +1,11 @@
 import sys
-import heapq
+from collections import deque
 input = sys.stdin.readline
 
 def dfs(start):
     visited = [0] * (v+1)
     dist = [0] * (v+1)
-    stack = [(0, start)]
+    stack = deque([(0, start)])
     visited[start] = 1
 
     while stack:
