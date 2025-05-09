@@ -1,33 +1,37 @@
-n, m = map(int, input().split()) 
-listA = []
-for _ in range(n): # 리스트A 선언
-    listA.append(list(map(int, list(input()))))
-listB = []
-for _ in range(n): # 리스트B 선언
-    listB.append(list(map(int, list(input()))))
+import sys
+input = sys.stdin.readline
 
+def switch(r, c, arr):
+    global cnt
+    cnt += 1
 
-def check(i, j): # 뒤집기 함수
-    for x in range(i, i+3):
-        for y in range(j, j+3):
-            if listA[x][y] == 0:
-                listA[x][y] = 1
-            else:
-                listA[x][y] = 0
+    for i in range(3):
+        arr[r+i][c:c+3] = [1 - x for x in arr[r+i][c:c+3]]
 
+    return
 
-cnt = 0 # 카운트
-if (n < 3 or m < 3) and listA != listB:
-    # 예외 1, 리스트가 작을 때
+n, m = map(int, input().split())
+a = list(list(map(int, input().strip())) for _ in range(n))
+b = list(list(map(int, input().strip())) for _ in range(n))
+
+if a == b:
+    cnt = 0
+
+elif n < 3 or m < 3:
     cnt = -1
-else:
-    for r in range(n-2):
-        for c in range(m-2):
-            if listA[r][c] != listB[r][c]:
-                cnt += 1
-                check(r, c)
 
-if cnt != -1:
-    if listA != listB: # A와 B가 같은지 확인
+else:
+    cnt = 0
+
+    for row in range(n-2):
+        for col in range(m-2):
+            if a[row][col] != b[row][col]:
+                switch(row, col, a)
+        if a[row] != b[row]:
+            cnt = -1
+            break
+
+    # 마지막 두 줄에 대한 검사 필요
+    if a[-2:] != b[-2:]:
         cnt = -1
 print(cnt)
