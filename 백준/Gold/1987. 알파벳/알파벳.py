@@ -1,29 +1,26 @@
 import sys
 input = sys.stdin.readline
 
-
 r, c = map(int, input().split())
-board = list(input().strip() for _ in range(r))
+board = [input().strip() for _ in range(r)]
 
-def dfs(row, col, path):
+dr = [-1, 1, 0, 0]
+dc = [0, 0, -1, 1]
+
+def dfs(row, col, bitmask, path):
     global max_path
     max_path = max(max_path, path)
-
-    dr = [-1, 1, 0, 0]
-    dc = [0, 0, -1, 1]
 
     for i in range(4):
         nr = row + dr[i]
         nc = col + dc[i]
 
-        if 0 <= nr < r and 0 <= nc < c and not visited[ord(board[nr][nc])-65]:
-            visited[ord(board[nr][nc])-65] = 1
-            dfs(nr, nc, path + 1)
-            visited[ord(board[nr][nc])-65] = 0
-
-    return max_path
+        if 0 <= nr < r and 0 <= nc < c:
+            idx = ord(board[nr][nc]) - 65
+            if not (bitmask & (1 << idx)):  # 방문하지 않은 알파벳이라면
+                dfs(nr, nc, bitmask | (1 << idx), path + 1)
 
 max_path = 0
-visited = [0] * 26
-visited[ord(board[0][0])-65] = 1
-print(dfs(0, 0, 1))
+start_char = ord(board[0][0]) - 65
+dfs(0, 0, 1 << start_char, 1)
+print(max_path)
