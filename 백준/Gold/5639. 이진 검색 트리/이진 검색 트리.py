@@ -1,31 +1,23 @@
 import sys
-input = sys.stdin.read
-#recursion error 방지
 sys.setrecursionlimit(10**9)
 
-arr = list(map(int, input().split()))
+nodes = list(map(int, sys.stdin.read().split()))
 
-def solution(A):
-    # 받은 배열 길이가 0이면 return
-    if len(A) == 0:
-        return
+def postorder(start, end):
+    if start >= end: return
+    # mid == end인 경우 처리해줘야
 
-    tempL, tempR = [], []
-    # 첫번째 값을 루트 노드로 설정
-    mid = A[0]
-    # 나머지 배열에 대해 for문을 돌면서 루트보다 커지는 부분을 기록해서 L과 R로 나눈다.
-    for i in range(1, len(A)):
-        if A[i] > mid:
-            tempL = A[1:i]
-            tempR = A[i:]
+    # 왼쪽 트리 오른쪽 트리 경계 찾기
+    mid = end
+    for i in range(start+1, end):
+        if nodes[start] < nodes[i]:
+            mid = i
             break
-    else:
-    	#모두 mid보다 작은 경우
-        tempL = A[1:]
-    
-    #왼쪽, 오른쪽 순으로 재귀 후 루트 노드 값 출력
-    solution(tempL)
-    solution(tempR)
-    print(mid)
 
-solution(arr)
+    # 왼쪽 트리 순회
+    postorder(start+1, mid)
+    # 오른쪽 트리 순회
+    postorder(mid, end)
+    print(nodes[start])
+
+postorder(0, len(nodes))
