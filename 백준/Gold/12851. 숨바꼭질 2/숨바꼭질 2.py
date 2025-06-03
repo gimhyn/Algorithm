@@ -7,7 +7,6 @@ N, K = map(int, input().split())
 def bfs(start, target):
     q = deque([(0, start)])
     visited = [0] * 100001
-    visited[start] = -1
 
     res, min_turn = 0, 100001
     while q:
