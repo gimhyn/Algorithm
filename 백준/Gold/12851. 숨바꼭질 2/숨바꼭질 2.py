@@ -13,10 +13,12 @@ def bfs(start, target):
         now = q.popleft()
         turn = visited[now]
         dx = [1, -1, now]
-
+        
         if now == target:
             res += 1
             min_turn = turn
+        if min_turn < turn:
+            break
 
         for i in range(3):
             next = now + dx[i]
